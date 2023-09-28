@@ -5,21 +5,28 @@
   <meta charset="utf-8">
   <title>PyWIDE</title>
 
+  <!-- This one is important for the manifest. -->
+  <meta name="theme-color" content="#0d085c" />
+  <link rel="manifest" href="/manifest.json">
   <link rel="icon" href="favicon.png">
+
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 
-  <script type="text/javascript" src="brython.js"></script>
-  <script type="text/javascript" src="brython_stdlib.js"></script>
+  <script type="text/javascript" src="/scripts/brython.js"></script>
+  <script type="text/javascript" src="/scripts/brython_stdlib.js"></script>
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.6/ace.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.6/ext-language_tools.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.6/theme-solarized_light.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.6/mode-python.min.js"></script>
+  <script src="/scripts/lib/ace/ace_1.9.6_ace.min.js"></script>
+  <script src="/scripts/lib/ace/ace_1.9.6_ext-language_tools.min.js"></script>
+  <script src="/scripts/lib/ace/ace_1.9.6_theme-solarized_light.min.js"></script>
+  <script src="/scripts/lib/ace/ace_1.9.6_mode-python.min.js"></script>
 
-  <link rel="stylesheet" href="console.css">
-  <link rel="stylesheet" href="brython.css">
+  <link rel="stylesheet" href="/console.css">
+  <link rel="stylesheet" href="/brython.css">
+
+  <script defer src="/scripts/pwa-handler.js"></script>
 
 
 </head>
@@ -34,6 +41,7 @@
       <button id="run" href="#console"> ▶ Run</button>
       <!-- <button id="show_console">Console</button> -->
       <button id="share_code">Share code</button>
+      <button id="install">Install</button>
     </div>
 
     <div id="container">
@@ -65,7 +73,7 @@
     from browser import document, window
     from browser import html
     from interpreter import Interpreter
-    import editor
+    from scripts import editor
 
 
     document['share_code'].bind('click', editor.share_code)

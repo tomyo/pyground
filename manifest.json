@@ -1,0 +1,18 @@
+{
+    "name": "PyGround",
+    "short_name": "PG",
+    "icons": [
+        {
+          "src": "/favicon.png",
+          "type": "image/png",
+          "sizes": "512x512",
+          "purpose": "any maskable"
+      }      
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#f0f2f5",
+    "theme_color": "#96f2d7",
+    "scope": "/"
+}
