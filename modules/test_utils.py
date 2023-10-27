@@ -21,6 +21,9 @@ def run_tests(fun: Callable, casos: list[TestCases]) -> None:
             ok = result == caso[2]
         except Exception as e:
             exception = e
+            if type(e) == caso[2]:
+                # The exception was the expect one, so it's ok
+                ok = True
 
         if ok:
             print("[OK ✔]", caso[3])
