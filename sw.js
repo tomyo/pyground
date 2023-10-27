@@ -21,19 +21,27 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE).then((cache) => {
       console.log("Caching started.");
-      return cache.addAll(urlsToCache);
+      return cache.addAll(["/*"]);
     })
   );
 });
 
-// Whenever a resource is requested, return if its cached else fetch the resourcefrom server.
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      if (response) {
-        return response;
-      }
-      return fetch(event.request);
+    caches.match(event.request).then((cachedResponse) => {
+      // Attempt to fetch a fresh response from the network.
+      const networkFetch = fetch(event.request)
+        .then((networkResponse) => {
+          // Update the cache with the fresh response.
+          caches.open(CACHE).then((cache) => {
+            cache.put(event.request, networkResponse.clone());
+          });
+          return networkResponse;
+        })
+        .catch(() => cachedResponse); // Fallback to cached response if network request fails.
+
+      // Return the cached response if available, or the network response.
+      return cachedResponse || networkFetch;
     })
   );
 });
