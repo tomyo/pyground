@@ -32,6 +32,10 @@ def run_tests(fun: Callable, casos: list[TestCases]) -> None:
             print("[Fail ❌]", caso[3])
             args = [a.__repr__() for a in caso[0]]
             kwargs = [f"{k}={v.__repr__()}" for k, v in caso[1].items()]
-            print(f">>> {fun.__name__}({','.join(args)}, {','.join(kwargs)})")
+            print(
+                f""">>> {fun.__name__}({", ".join(args)}{(", " if kwargs else "") + ", ".join(kwargs)})"""
+            )
             print(f"Returned: {got}")
             print(f"Expected: {caso[2].__name__ if exception else caso[2]}")
+
+        print("")  # Add a new line after each test result
