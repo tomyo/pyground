@@ -5,7 +5,7 @@ class TestCases(NamedTuple):
     args: list
     kwargs: dict
     expected: any
-    description: str
+    description: str = ""
 
     def __repr__(self) -> str:
         return f"TestCases({self.args}, {self.kwargs}, {self.expected}, {self.description})"
@@ -25,16 +25,17 @@ def run_tests(fun: Callable, casos: list[TestCases]) -> None:
                 # The exception was the expect one, so it's ok
                 ok = True
 
+        args = [a.__repr__() for a in caso[0]]
+        kwargs = [f"{k}={v.__repr__()}" for k, v in caso[1].items()]
+        fpprint = f'{fun.__name__}({", ".join(args)}{(", " if kwargs else "") + ", ".join(kwargs)})'
+        description = caso[3] if len(caso) == 4 else f"{fpprint} -> {caso[2]}"
+
         if ok:
-            print("[OK ✔]", caso[3])
+            print("[OK ✔]", description)
         else:
             got = result if not exception else exception.__repr__()
-            print("[Fail ❌]", caso[3])
-            args = [a.__repr__() for a in caso[0]]
-            kwargs = [f"{k}={v.__repr__()}" for k, v in caso[1].items()]
-            print(
-                f""">>> {fun.__name__}({", ".join(args)}{(", " if kwargs else "") + ", ".join(kwargs)})"""
-            )
+            print("[Fail ❌]", description)
+            print(f""">>> {fpprint}""")
             print(f"Returned: {got}")
             print(f"Expected: {caso[2].__name__ if exception else caso[2]}")
 
